@@ -59,8 +59,9 @@ const buttonClass = css({
   justifyContent: "center",
   alignItems: "center",
   position: "absolute",
-  top: 16,
+  top: "50%",
   left: 10,
+  transform: "translate3D(0, -50%, 0)",
   zIndex: 1000,
 
   "@lg": {

@@ -15,3 +15,5 @@ export type SortingAlgorithm =
   | "insertion"
   | "merge"
   | "quick";
+
+export type SortingOrder = "ASC" | "DESC";

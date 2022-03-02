@@ -1,5 +1,5 @@
 import { Command } from "features/common/lib/commands/CommandInterface";
-import { BaseItem, SortingAlgorithm } from "../lib/types";
+import { BaseItem, SortingAlgorithm, SortingOrder } from "../lib/types";
 
 export const COMMON_ACTION_TYPES = {
   DELETE_ITEM: "DELETE_ITEM",
@@ -11,14 +11,14 @@ export const COMMON_ACTION_TYPES = {
 
 export const ADDITIONAL_ACTION_TYPES = {
   ADD_ITEM: "ADD_ITEM",
-  START_ANIMATION: "START_ANIMATION",
+  INITIALIZE: "INITIALIZE",
 } as const;
 
 export type AdditionalAction<Item extends BaseItem> =
   | { type: typeof ADDITIONAL_ACTION_TYPES.ADD_ITEM; payload: Item }
   | {
-      type: typeof ADDITIONAL_ACTION_TYPES.START_ANIMATION;
-      algorithm: SortingAlgorithm;
+      type: typeof ADDITIONAL_ACTION_TYPES.INITIALIZE;
+      payload: { list: Array<Item>; sortingOrder: SortingOrder };
     };
 
 export type DefaultAction =
@@ -31,6 +31,7 @@ export type DefaultAction =
 export type BaseState<Item extends BaseItem> = {
   list: Array<Item>;
   commands: Array<Command<Item>>;
+  sortingOrder: SortingOrder;
   startAnimation: boolean;
   totalStep: number;
   currentStep: number;

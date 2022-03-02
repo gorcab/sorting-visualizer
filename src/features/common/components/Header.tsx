@@ -32,7 +32,7 @@ const headerClass = css({
   borderBottom: "1px solid #1f2937",
   padding: "$sm",
   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-  "@md": {
+  "@lg": {
     padding: "$md",
   },
 });
@@ -50,13 +50,13 @@ const titleClass = css({
   },
 
   "@lg": {
+    left: "unset",
+    top: "unset",
     paddingLeft: "$1",
     fontSize: "$xl3",
     textAlign: "unset",
     position: "unset",
     transform: "none",
-    top: "auto",
-    left: "auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

@@ -1,21 +1,33 @@
+import { BubbleAnimation } from "features/bubbleSort/components/BubbleAnimation";
+import React from "react";
 import { css } from "stitches.config";
 import { useAlgorithm } from "../contexts/algorithm";
-import { useId } from "../hooks/useId";
-import { ListHandlingToolbar } from "./ListHandlingToolbar";
+import { SortingAlgorithm } from "../lib/types";
+
+const animationComponentMap: Record<SortingAlgorithm, React.ElementType> = {
+  bubble: BubbleAnimation,
+  insertion: () => <div>Insertion</div>,
+  merge: () => <div>Merge</div>,
+  quick: () => <div>Quick</div>,
+  selection: () => <div>Selection</div>,
+};
 
 export function AnimationSection() {
-  const id = useId("sorting-animation");
+  const { algorithm } = useAlgorithm();
+  let AnimationComponent: React.ElementType;
+  AnimationComponent = animationComponentMap[algorithm];
 
   return (
     <>
-      <section id={id} className={animationSectionClass()}>
-        Animation Section
+      <section className={animationSectionClass()}>
+        <AnimationComponent />
       </section>
-      <ListHandlingToolbar animationSectionId={id} />
     </>
   );
 }
 
 const animationSectionClass = css({
   flex: 1,
+  display: "flex",
+  flexDirection: "column",
 });

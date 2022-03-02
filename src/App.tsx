@@ -1,9 +1,19 @@
 import { globalCss } from "@stitches/react";
+import { BubbleAnimation } from "features/bubbleSort/components/BubbleAnimation";
 import { AnimationSection } from "features/common/components/AnimationSection";
 import { Header } from "features/common/components/Header";
 import { AlgorithmProvider } from "features/common/contexts/algorithm";
 import { DrawerProvider } from "features/common/contexts/drawer";
+import { SortingAlgorithm } from "features/common/lib/types";
 import { css } from "stitches.config";
+
+const animationComponentMap: Record<SortingAlgorithm, React.ElementType> = {
+  bubble: BubbleAnimation,
+  insertion: () => <div>Insertion</div>,
+  merge: () => <div>Insertion</div>,
+  quick: () => <div>Insertion</div>,
+  selection: () => <div>Insertion</div>,
+};
 
 function App() {
   globalStyles();

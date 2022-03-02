@@ -87,7 +87,7 @@ export function useSortingAnimation<
       case "ADD_ITEM": {
         return reducerMap[action.type](state, action);
       }
-      case "START_ANIMATION": {
+      case "INITIALIZE": {
         return reducerMap[action.type](state, action);
       }
       case "DELETE_ITEM": {

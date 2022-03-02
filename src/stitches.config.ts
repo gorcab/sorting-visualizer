@@ -1,4 +1,5 @@
 import { createStitches } from "@stitches/react";
+import { MIN_ITEM_HEIGHT } from "features/common/lib/constants";
 
 export const { css, styled } = createStitches({
   media: {
@@ -32,6 +33,9 @@ export const { css, styled } = createStitches({
           },
     selectAlgorithm: (isSelected: boolean) =>
       isSelected ? { color: "$green500" } : { color: "$white" },
+    nodeHeight: (value: number) => ({
+      height: value + MIN_ITEM_HEIGHT,
+    }),
   },
   theme: {
     colors: {
@@ -40,6 +44,7 @@ export const { css, styled } = createStitches({
       green500: "#22c55e",
       green600: "rgba(22, 163, 74, 1)",
       bg: "$gray",
+      disabled: "#6b7280",
       initial: "rgba(22, 163, 74, 0.5)",
       selected: "$green600",
       sorted: "rgba(8, 145, 178, 1)",

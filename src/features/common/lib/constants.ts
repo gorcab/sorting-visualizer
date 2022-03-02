@@ -17,3 +17,6 @@ export const Keyboard = {
 
   Tab: "Tab",
 };
+
+export const MIN_ITEM_HEIGHT = 20;
+export const MAX_ITEM_NUM = 8;

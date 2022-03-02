@@ -1,4 +1,4 @@
-import { Keyboard } from "features/common/lib/constant";
+import { Keyboard } from "features/common/lib/constants";
 import { useReducer } from "react";
 import { css } from "stitches.config";
 import { ToolbarContext } from "../context";

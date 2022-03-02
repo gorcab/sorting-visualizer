@@ -5,8 +5,7 @@ export type Algorithm =
   | "insertion"
   | "selection"
   | "merge"
-  | "quick"
-  | null;
+  | "quick";
 
 type ContextValue = {
   algorithm: Algorithm;

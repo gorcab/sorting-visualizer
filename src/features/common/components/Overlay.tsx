@@ -1,7 +1,20 @@
 import { css } from "stitches.config";
 
-export function Overlay() {
-  return <div aria-hidden="true" className={overlayClass()}></div>;
+type OverlayProps = {
+  zIndex?: number;
+};
+
+export function Overlay({ zIndex }: OverlayProps) {
+  return (
+    <div
+      aria-hidden="true"
+      className={overlayClass({
+        css: {
+          zIndex: zIndex ?? 5,
+        },
+      })}
+    ></div>
+  );
 }
 
 const overlayClass = css({

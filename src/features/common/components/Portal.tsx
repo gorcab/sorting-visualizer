@@ -1,31 +1,43 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 type PortalProps = {
   displayName: string;
   children: React.ReactNode;
+  portalId?: string;
 };
 
 let id = 1;
 
-export function Portal({ displayName, children }: PortalProps) {
-  const element = useRef<HTMLDivElement>(document.createElement("div"));
-  const [shouldOpen] = useState(!element.current.parentElement);
+export const Portal = forwardRef<HTMLDivElement, PortalProps>(
+  ({ displayName, children }, ref) => {
+    const element = useRef<HTMLDivElement>(document.createElement("div"));
+    const [shouldOpen] = useState(!element.current.parentElement);
 
-  useEffect(() => {
-    const portalElem = element.current;
-    if (shouldOpen) {
-      portalElem.id = `${displayName}-${id}`;
-      id++;
-      document.body.appendChild(portalElem);
-    }
+    useImperativeHandle(ref, () => element.current);
 
-    return () => {
-      if (shouldOpen && portalElem.parentElement) {
-        portalElem.parentElement.removeChild(portalElem);
+    useEffect(() => {
+      if (!element.current) return;
+      const portalElem = element.current;
+      if (shouldOpen) {
+        portalElem.id = `${displayName}-${id}`;
+        id++;
+        document.body.appendChild(portalElem);
       }
-    };
-  }, [shouldOpen, displayName]);
 
-  return createPortal(children, element.current);
-}
+      return () => {
+        if (shouldOpen && portalElem.parentElement) {
+          portalElem.parentElement.removeChild(portalElem);
+        }
+      };
+    }, [shouldOpen, displayName]);
+
+    return createPortal(children, element.current);
+  }
+);

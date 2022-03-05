@@ -30,7 +30,6 @@ export function getCompareFunc(
 }
 
 export function getRandomNumber(min: number = 10, max: number = 100) {
-  // [min, max)
-  const randomNumber = Math.floor(Math.random() * (max - min)) + min;
+  const randomNumber = Math.floor(Math.random() * (max - min)) + min; // [min, max)
   return randomNumber;
 }

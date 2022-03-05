@@ -18,32 +18,42 @@ export const { css, styled } = createStitches({
     navOpen: (isOpen: boolean) =>
       isOpen
         ? {
+            visibility: "visible",
             transform: "translateX(0)",
 
             "@lg": {
+              visibility: "unset",
               transform: "none",
             },
           }
         : {
+            visibility: "hidden",
             transform: "translateX(-100%)",
 
             "@lg": {
+              visibility: "unset",
               transform: "none",
             },
           },
     selectAlgorithm: (isSelected: boolean) =>
-      isSelected ? { color: "$green500" } : { color: "$white" },
+      isSelected ? { color: "$green600" } : { color: "$white" },
     nodeHeight: (value: number) => ({
       height: value + MIN_ITEM_HEIGHT,
     }),
   },
   theme: {
     colors: {
-      gray: "#1f2937",
       white: "#ffffff",
+      gray600: "#4b5563",
+      gray700: "#374151",
+      gray800: "rgba(31, 41, 55, 1)",
+      gray900: "#111827",
+      green400: "#4ade80",
       green500: "#22c55e",
       green600: "rgba(22, 163, 74, 1)",
-      bg: "$gray",
+      green700: "#15803d",
+      darkbg: "rgba(31, 41, 55, 0.3)",
+      bg: "$gray800",
       disabled: "#6b7280",
       initial: "rgba(22, 163, 74, 0.5)",
       selected: "$green600",
@@ -74,6 +84,7 @@ export const { css, styled } = createStitches({
       72: "18rem",
       80: "20rem",
       96: "24rem",
+      100: "30rem",
       full: "100%",
       h_screen: "100vh",
     },

@@ -1,11 +1,12 @@
+import { MouseEventHandler } from "react";
 import { css } from "stitches.config";
 import { Toolbar } from "../../common/components/Toolbar";
 
 type ListHandlingToolbarProps = {
   animationSectionId: string;
-  onAddClick: () => void;
-  onDeleteClick: () => void;
-  onStartClick: () => void;
+  onAddClick: MouseEventHandler;
+  onDeleteClick: MouseEventHandler;
+  onStartClick: MouseEventHandler;
   isDisabledAddButton: boolean;
   isDisabledDeleteButton: boolean;
   isDisabledStartButton: boolean;
@@ -55,14 +56,18 @@ const toolbarBtnClass = css({
   backgroundColor: "transparent",
   color: "$white",
   padding: "$sm",
-  outlineColor: "$green500",
   flex: 1,
   height: "100%",
   fontSize: "$lg",
   cursor: "pointer",
 
+  "&:focus, &:active": {
+    outline: "$green500 solid",
+  },
+
   "&:disabled": {
     color: "$disabled",
+    cursor: "not-allowed",
   },
 
   "&:hover:not(:disabled)": {

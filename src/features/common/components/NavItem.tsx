@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { css } from "stitches.config";
 import { Algorithm, useAlgorithm } from "../contexts/algorithm";
 import { useDrawer } from "../contexts/drawer";
@@ -10,16 +10,21 @@ type NavItemProps = {
 
 export function NavItem({ algorithm, children }: NavItemProps) {
   const { toggleOpen } = useDrawer();
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const { selectAlgorithm, algorithm: selectedAlgorithm } = useAlgorithm();
   const isSelected = selectedAlgorithm === algorithm;
   const changeAlgorithm = () => {
     selectAlgorithm(algorithm);
     toggleOpen(0);
+    requestAnimationFrame(() => {
+      buttonRef.current?.blur();
+    });
   };
 
   return (
     <li>
       <button
+        ref={buttonRef}
         onClick={changeAlgorithm}
         className={buttonClass({ css: { selectAlgorithm: isSelected } })}
       >
@@ -32,7 +37,7 @@ export function NavItem({ algorithm, children }: NavItemProps) {
 const buttonClass = css({
   padding: "$base",
   border: "none",
-  outlineColor: "$green500",
+  outline: "none",
   backgroundColor: "transparent",
   color: "$white",
   cursor: "pointer",
@@ -40,12 +45,12 @@ const buttonClass = css({
   width: "100%",
   textAlign: "left",
 
-  "&:hover": {
+  "&:focus": {
     color: "$green500",
   },
 
-  "& + li": {
-    paddingLeft: "$base",
+  "&:hover": {
+    color: "$green500",
   },
 
   "@lg": {

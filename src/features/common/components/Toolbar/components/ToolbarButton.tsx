@@ -10,9 +10,9 @@ export function ToolbarButton(props: ToolbarButtonProps) {
   const buttonId = useId("toobar-button");
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { state, dispatch } = useToolbarContext(ToolbarButton.name);
-  const { buttonIds, focusedButtonIndex } = state;
+  const { buttonIds, focusedButtonIndex, isFocusable } = state;
   const isFocused = buttonIds[focusedButtonIndex] === buttonId;
-  const { onClick, ...restProps } = props;
+  const { onMouseDown, onClick, disabled, ...restProps } = props;
 
   useEffect(() => {
     dispatch({ type: "REGISTER_BUTTON", id: buttonId });
@@ -20,22 +20,42 @@ export function ToolbarButton(props: ToolbarButtonProps) {
   }, [buttonId, dispatch]);
 
   useEffect(() => {
+    if (disabled !== undefined) {
+      dispatch({
+        type: "CHANGE_STATE",
+        payload: { id: buttonId, disabled: disabled },
+      });
+    }
+  }, [disabled, dispatch, buttonId]);
+
+  useEffect(() => {
     if (!buttonRef.current) return;
-    if (isFocused) {
+
+    if (isFocusable && isFocused) {
       buttonRef.current.focus();
     }
-  }, [isFocused]);
+  }, [isFocusable, isFocused]);
 
-  const focusChange = () => dispatch({ type: "FOCUS_SPECIFIC", id: buttonId });
+  const mouseDownHandler: React.MouseEventHandler<HTMLInputElement> = () => {
+    dispatch({ type: "FOCUS_SPECIFIC", id: buttonId });
+  };
 
-  const clickHandler = callAll(focusChange, onClick);
+  const clickHandler: React.MouseEventHandler<HTMLInputElement> = () => {
+    dispatch({ type: "FOCUS_SPECIFIC", id: buttonId });
+  };
+
+  const allMouseDownHandlers = callAll(onMouseDown, mouseDownHandler);
+  const allClickHandlers = callAll(clickHandler, onClick);
 
   const Button = React.createElement("button", {
     ...restProps,
+    disabled,
+    "aria-disabled": disabled,
     ref: buttonRef,
     type: "button",
     tabIndex: isFocused ? 0 : -1,
-    onClick: clickHandler,
+    onMouseDown: allMouseDownHandlers,
+    onClick: allClickHandlers,
   });
 
   return Button;

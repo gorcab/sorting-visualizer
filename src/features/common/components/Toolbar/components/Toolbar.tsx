@@ -13,7 +13,6 @@ type ToolbarProps = {
 
 export function Toolbar({ children, label, ariaControls }: ToolbarProps) {
   const [state, dispatch] = useReducer(toolbarReducer, toolbarInitialState);
-
   const value = {
     state,
     dispatch,

@@ -7,19 +7,19 @@ export function DrawerToggleButton() {
 
   return (
     <button className={buttonClass()} onClick={() => toggleOpen()}>
-      <svg width="30" height="30" viewBox="0 0 23 23">
+      <svg width="30" height="30" viewBox="0 0 30 30">
         <Line
           initial={false}
           animate={isOpen ? "open" : "closed"}
           variants={{
-            closed: { d: "M 2 4 L 20 4" },
-            open: { d: "M 3 16.5 L 17 2.5" },
+            closed: { d: "M 5 5 L 25 5" },
+            open: { d: "M 5 25 L 25 5" },
           }}
         />
         <Line
           initial={false}
           animate={isOpen ? "open" : "closed"}
-          d="M 2 12 L 20 12"
+          d="M 5 15 L 25 15"
           variants={{
             closed: { opacity: 1 },
             open: { opacity: 0 },
@@ -30,8 +30,8 @@ export function DrawerToggleButton() {
           initial={false}
           animate={isOpen ? "open" : "closed"}
           variants={{
-            closed: { d: "M 2 20 L 20 20" },
-            open: { d: "M 3 2.5 L 17 16.346" },
+            closed: { d: "M 5 25 L 25 25" },
+            open: { d: "M 5 5 L 25 25" },
           }}
         />
       </svg>
@@ -62,7 +62,8 @@ const buttonClass = css({
   top: "50%",
   left: 10,
   transform: "translate3D(0, -50%, 0)",
-  zIndex: 1000,
+  zIndex: 100,
+  cursor: "pointer",
 
   "@lg": {
     display: "none",

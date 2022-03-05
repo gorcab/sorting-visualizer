@@ -50,7 +50,7 @@ const navClass = css({
   left: "0%",
   height: "$h_screen",
   transition: "transform 0.1s",
-  zIndex: 100,
+  zIndex: 10,
   backgroundColor: "$bg",
 
   "@lg": {

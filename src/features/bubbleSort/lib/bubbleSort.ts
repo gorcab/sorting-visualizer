@@ -11,7 +11,7 @@ export function bubbleSort(
   list: Array<BubbleSortItem>,
   sortingOrder: SortingOrder
 ): Array<Command<BubbleSortItem>> {
-  // key: initialIndex -> value: currentIndex
+  // (key: initialIndex, value: currentIndex)
   const indicesMap: Map<number, number> = new Map();
   list.forEach((_, index) => indicesMap.set(index, index));
   const commands: Array<Command<BubbleSortItem>> = [];

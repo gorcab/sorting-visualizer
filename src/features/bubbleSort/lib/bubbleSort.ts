@@ -11,50 +11,58 @@ export function bubbleSort(
   list: Array<BubbleSortItem>,
   sortingOrder: SortingOrder
 ): Array<Command<BubbleSortItem>> {
-  // (key: initialIndex, value: currentIndex)
-  const indicesMap: Map<number, number> = new Map();
-  list.forEach((_, index) => indicesMap.set(index, index));
+  const _list = list.slice();
   const commands: Array<Command<BubbleSortItem>> = [];
-  const compare = getCompareFunc(sortingOrder);
+  const compare = getCompareFunc<BubbleSortItem>(sortingOrder);
   let isSwapped = false;
-  let firstIndex: number = -1,
-    secondIndex: number = -1;
-  let selectedIndices: Array<number> = [];
+  let firstInitalIdx = -1,
+    secondInitialIdx = -1;
+  // const selectedIndicesSet = new Set<number>();
 
   for (let i = 0; i < list.length; i++) {
     isSwapped = false;
-    selectedIndices = [];
+    // selectedIndicesSet.clear();
     for (let j = 0; j < list.length - 1 - i; j++) {
-      selectedIndices.push(j);
-      firstIndex = indicesMap.get(j)!;
-      secondIndex = indicesMap.get(j + 1)!;
+      firstInitalIdx = _list[j].initialIndex;
+      secondInitialIdx = _list[j + 1].initialIndex;
+      // selectedIndicesSet.add(firstInitalIdx);
+      // selectedIndicesSet.add(secondInitialIdx);
 
-      commands.push(new SelectCommand(firstIndex, secondIndex));
+      commands.push(new SelectCommand(firstInitalIdx, secondInitialIdx));
 
-      if (compare(list[firstIndex], list[firstIndex])) {
+      if (compare(_list[j], _list[j + 1])) {
         isSwapped = true;
-        indicesMap.set(j, secondIndex);
-        indicesMap.set(j + 1, firstIndex);
 
         commands.push(
-          new SwapCommand(
-            { initialIndex: j, currentIndex: firstIndex },
-            { initialIndex: j + 1, currentIndex: secondIndex }
+          new SwapCommand<BubbleSortItem>(
+            { initialIndex: _list[j].initialIndex, currentIndex: j + 1 },
+            { initialIndex: _list[j + 1].initialIndex, currentIndex: j }
           )
         );
+        [_list[j], _list[j + 1]] = [_list[j + 1], _list[j]];
       }
 
       commands.push(
-        new RevertCommand(new SelectCommand(firstIndex, secondIndex))
+        new RevertCommand<BubbleSortItem>(
+          new SelectCommand<BubbleSortItem>(firstInitalIdx, secondInitialIdx)
+        )
       );
     }
 
     if (!isSwapped) {
-      commands.push(new CompleteCommand(...selectedIndices));
+      const selectedIndices = Array.from(
+        { length: _list.length - i },
+        (_, index) => _list[index].initialIndex
+      );
+      commands.push(new CompleteCommand<BubbleSortItem>(...selectedIndices));
       return commands;
     }
 
-    commands.push(new CompleteCommand(firstIndex));
+    commands.push(
+      new CompleteCommand<BubbleSortItem>(
+        _list[_list.length - 1 - i].initialIndex
+      )
+    );
   }
 
   return commands;

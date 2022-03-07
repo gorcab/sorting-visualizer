@@ -9,7 +9,7 @@ import { bubbleSort } from "../lib/bubbleSort";
 
 export type BubbleSortItem = BaseItem & SelectableItem;
 
-type BubbleSortState = BaseState<BubbleSortItem>;
+export type BubbleSortState = BaseState<BubbleSortItem>;
 
 type BubbleSortReducerMap = {
   [key in keyof typeof ADDITIONAL_ACTION_TYPES]: (
@@ -20,6 +20,7 @@ type BubbleSortReducerMap = {
 
 export function numToBubbleSortItemMappingFunc(num: number, index: number) {
   const bubbleSortItem: BubbleSortItem = {
+    id: index + 1,
     value: num,
     currentIndex: index,
     initialIndex: index,

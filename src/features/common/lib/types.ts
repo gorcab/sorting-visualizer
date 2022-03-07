@@ -1,4 +1,5 @@
 export type BaseItem = {
+  id: number;
   value: number;
   initialIndex: number;
   currentIndex: number;

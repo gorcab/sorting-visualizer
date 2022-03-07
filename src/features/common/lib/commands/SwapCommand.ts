@@ -17,11 +17,11 @@ export class SwapCommand<Item extends BaseItem> implements Command<Item> {
     const newList = list.slice();
     newList[this.indicesTuple[0].initialIndex] = {
       ...newList[this.indicesTuple[0].initialIndex],
-      currentIndex: this.indicesTuple[1].currentIndex,
+      currentIndex: this.indicesTuple[0].currentIndex,
     };
     newList[this.indicesTuple[1].initialIndex] = {
       ...newList[this.indicesTuple[1].initialIndex],
-      currentIndex: this.indicesTuple[0].currentIndex,
+      currentIndex: this.indicesTuple[1].currentIndex,
     };
 
     return newList;
@@ -31,11 +31,12 @@ export class SwapCommand<Item extends BaseItem> implements Command<Item> {
     const newList = list.slice();
     newList[this.indicesTuple[0].initialIndex] = {
       ...newList[this.indicesTuple[0].initialIndex],
-      curretIndex: this.indicesTuple[0].currentIndex,
+      currentIndex: this.indicesTuple[1].currentIndex,
     };
+
     newList[this.indicesTuple[1].initialIndex] = {
       ...newList[this.indicesTuple[1].initialIndex],
-      curretIndex: this.indicesTuple[1].currentIndex,
+      currentIndex: this.indicesTuple[0].currentIndex,
     };
 
     return newList;

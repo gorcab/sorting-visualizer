@@ -18,6 +18,7 @@ export class SelectCommand<Item extends SelectableItem>
         isSelected: true,
       };
     });
+
     return newList;
   }
 

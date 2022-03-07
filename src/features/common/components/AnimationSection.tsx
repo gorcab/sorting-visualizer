@@ -18,11 +18,9 @@ export function AnimationSection() {
   AnimationComponent = animationComponentMap[algorithm];
 
   return (
-    <>
-      <section className={animationSectionClass()}>
-        <AnimationComponent />
-      </section>
-    </>
+    <section className={animationSectionClass()}>
+      <AnimationComponent />
+    </section>
   );
 }
 

@@ -1,10 +1,12 @@
 import { useSortingAnimation } from "features/common/hooks/useSortingAnimation";
 import { SortingOrder } from "features/common/lib/types";
 import { AnimationSettingTemplate } from "features/setting/components/AnimationSettingTemplate";
+import { BubbleSortContext } from "../context";
 import {
   bubbleSortReducerMap,
   numToBubbleSortItemMappingFunc,
 } from "../reducer";
+import { BubbleSortAnimationTemplate } from "./BubbleSortAnimationTemplate";
 
 export function BubbleAnimation() {
   const { state, dispatch } = useSortingAnimation({
@@ -19,6 +21,11 @@ export function BubbleAnimation() {
     },
   });
 
+  const contextValue = {
+    state,
+    dispatch,
+  };
+
   const initAnimation = (nums: Array<number>, sortingOrder: SortingOrder) => {
     dispatch({
       type: "INITIALIZE",
@@ -31,7 +38,9 @@ export function BubbleAnimation() {
 
   const { startAnimation } = state;
   return startAnimation ? (
-    <div>Sorting start</div>
+    <BubbleSortContext.Provider value={contextValue}>
+      <BubbleSortAnimationTemplate />
+    </BubbleSortContext.Provider>
   ) : (
     <AnimationSettingTemplate onInit={initAnimation} />
   );

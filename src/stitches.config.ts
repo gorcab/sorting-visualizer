@@ -44,6 +44,8 @@ export const { css, styled } = createStitches({
   theme: {
     colors: {
       white: "#ffffff",
+      gray400: "#9ca3af",
+      gray500: "#6b7280",
       gray600: "#4b5563",
       gray700: "#374151",
       gray800: "rgba(31, 41, 55, 1)",
@@ -68,6 +70,9 @@ export const { css, styled } = createStitches({
       6: "1.5rem",
       7: "1.75rem",
       8: "2rem",
+      9: "2.25rem",
+      10: "2.5rem",
+      12: "3rem",
       16: "4rem",
       20: "5rem",
       24: "6rem",

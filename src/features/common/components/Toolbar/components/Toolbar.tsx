@@ -4,6 +4,7 @@ import { css } from "stitches.config";
 import { ToolbarContext } from "../context";
 import { toolbarInitialState, toolbarReducer } from "../reducer";
 import { ToolbarButton } from "./ToolbarButton";
+import { ToolbarIconButton } from "./ToolbarIconButton";
 
 type ToolbarProps = {
   children: React.ReactNode;
@@ -54,8 +55,10 @@ export function Toolbar({ children, label, ariaControls }: ToolbarProps) {
 }
 
 Toolbar.Button = ToolbarButton;
+Toolbar.IconButton = ToolbarIconButton;
 
 const toolbarClass = css({
+  position: "relative",
   height: "$20",
   padding: "$sm",
   borderTop: "2px solid #1f2937",

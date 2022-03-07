@@ -1,0 +1,15 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="transparent" aria-hidden="true">
+        <path
+          fill="current"
+          strokeWidth="5"
+          stroke="current"
+          strokeLinecap="round"
+          d="M 5 5 L 5 25"
+        />
+        <path
+          fill="current"
+          strokeWidth="1"
+          stroke="current"
+          d="M 25,5 L 10,15 L 25,25z"
+        />
+</svg>

@@ -23,57 +23,62 @@ type SortingAnimationOptions<
 
 export function useSortingAnimation<
   Item extends BaseItem,
-  State extends BaseState<Item>
+  State extends BaseState<Item> = BaseState<Item>
 >({ reducerMap, initialState }: SortingAnimationOptions<Item, State>) {
   const defaultReducerMap: DefaultReducerMap<Item, State> = {
     DELETE_ITEM: (state) => {
       const list = state.list.slice(0, state.list.length - 1);
       return { ...state, list };
     },
+
     END_ANIMATION: () => {
       return {
         ...initialState,
       };
     },
+
     GO_TO_NEXT_STEP: (state) => {
       const nextStep =
-        state.currentStep < state.totalStep - 1 ? state.currentStep + 1 : -1;
+        state.currentStep < state.totalStep ? state.currentStep + 1 : -1;
       if (nextStep === -1) return { ...state };
 
-      const list = state.commands[state.currentStep].execute(state.list);
+      const newList = state.commands[state.currentStep].execute(state.list);
       return {
         ...state,
-        list,
+        list: newList,
         currentStep: nextStep,
       };
     },
+
     GO_TO_PREV_STEP: (state) => {
       const prevStep = state.currentStep > 0 ? state.currentStep - 1 : -1;
+
       if (prevStep === -1) return { ...state };
 
-      const list = state.commands[prevStep].undo(state.list);
+      const newList = state.commands[prevStep].undo(state.list);
       return {
         ...state,
-        list,
+        list: newList,
         currentStep: prevStep,
       };
     },
+
     GO_TO_SPECIFIC_STEP: (state, action) => {
       let startStep = state.currentStep;
       let endStep = action.step;
-      let list = state.list;
+      let newList = state.list;
       if (startStep > endStep) {
         for (let i = startStep - 1; i >= endStep; i--) {
-          list = state.commands[i].undo(list);
+          newList = state.commands[i].undo(newList);
         }
       } else {
-        for (let i = startStep; i <= endStep; i++) {
-          list = state.commands[i].execute(list);
+        for (let i = startStep; i <= endStep - 1; i++) {
+          newList = state.commands[i].execute(newList);
         }
       }
       return {
         ...state,
-        list,
+        list: newList,
         currentStep: endStep,
       };
     },

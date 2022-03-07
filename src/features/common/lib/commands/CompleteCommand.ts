@@ -16,6 +16,7 @@ export class CompleteCommand<Item extends BaseItem> implements Command<Item> {
         isSorted: true,
       };
     });
+
     return newList;
   }
 
@@ -27,6 +28,7 @@ export class CompleteCommand<Item extends BaseItem> implements Command<Item> {
         isSorted: false,
       };
     });
+
     return newList;
   }
 }

@@ -1,5 +1,5 @@
 import { Command } from "features/common/lib/commands/CommandInterface";
-import { BaseItem, SortingAlgorithm, SortingOrder } from "../lib/types";
+import { BaseItem, SortingOrder } from "../lib/types";
 
 export const COMMON_ACTION_TYPES = {
   DELETE_ITEM: "DELETE_ITEM",
@@ -38,8 +38,8 @@ export type BaseState<Item extends BaseItem> = {
 };
 
 export type DefaultReducerMap<
-  Item extends BaseItem = BaseItem,
-  State extends BaseState<Item> = BaseState<Item>
+  Item extends BaseItem,
+  State extends BaseState<Item>
 > = {
   [key in keyof typeof COMMON_ACTION_TYPES]: (
     state: State,

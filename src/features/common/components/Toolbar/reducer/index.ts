@@ -30,9 +30,22 @@ export function toolbarReducer(
       const buttonIds = state.buttonIds.concat(id);
       const isFocusable = false;
       const buttonDisabledMap = { ...state.buttonDisabledMap };
-      buttonDisabledMap[id] = true;
+      buttonDisabledMap[id] = false;
+      const focusedButtonIndex = state.buttonIds.findIndex((buttonId) => {
+        if (state.buttonDisabledMap[buttonId]) {
+          return false;
+        } else {
+          return true;
+        }
+      });
 
-      return { ...state, buttonIds, buttonDisabledMap, isFocusable };
+      return {
+        ...state,
+        buttonIds,
+        buttonDisabledMap,
+        focusedButtonIndex: focusedButtonIndex,
+        isFocusable,
+      };
     }
 
     case "UNREGISTER_BUTTON": {
@@ -99,6 +112,7 @@ export function toolbarReducer(
 
     case "CHANGE_STATE": {
       const { id: buttonId, disabled } = action.payload;
+
       const index = state.buttonIds.findIndex((id) => id === buttonId);
       if (index === -1) {
         return { ...state };

@@ -18,10 +18,10 @@ import {
   SortableContext,
 } from "@dnd-kit/sortable";
 import { useState } from "react";
-import { css } from "stitches.config";
 import { OverlayItem } from "./OverlayItem";
 import { Portal } from "../../common/components/Portal";
 import { SortableItem } from "./SortableItem";
+import { ListDisplay } from "features/common/components/ListDisplay";
 
 type Item = {
   id: string;
@@ -81,11 +81,11 @@ export function SortableList({
       onDragCancel={handleDragCancel}
     >
       <SortableContext items={list} strategy={horizontalListSortingStrategy}>
-        <ul className={sortableGroupClass()} id={ulElementId}>
+        <ListDisplay id={ulElementId}>
           {list.map(({ id, value }) => (
             <SortableItem key={id} id={id} value={value} />
           ))}
-        </ul>
+        </ListDisplay>
       </SortableContext>
       <Portal displayName="dnd-overlay">
         <DragOverlay
@@ -102,15 +102,3 @@ export function SortableList({
     </DndContext>
   );
 }
-
-const sortableGroupClass = css({
-  display: "flex",
-  justifyContent: "flex-start",
-  height: 200,
-  alignItems: "flex-end",
-  gap: "$md",
-
-  "@md": {
-    justifyContent: "center",
-  },
-});

@@ -6,25 +6,21 @@ export function callAll(...functions: Array<VoidReturnFunc | undefined>) {
   return (...args: any[]) => functions.forEach((func) => func && func(...args));
 }
 
-export function getCompareFunc(
+export function getCompareFunc<Item extends BaseItem>(
   sortingOrder: SortingOrder,
   equalTo: boolean = false
 ) {
   if (equalTo) {
     if (sortingOrder === "ASC") {
-      return <Item extends BaseItem>(item1: Item, item2: Item) =>
-        item1.value > item2.value;
+      return (item1: Item, item2: Item) => item1.value > item2.value;
     } else {
-      return <Item extends BaseItem>(item1: Item, item2: Item) =>
-        item1.value < item2.value;
+      return (item1: Item, item2: Item) => item1.value < item2.value;
     }
   } else {
     if (sortingOrder === "ASC") {
-      return <Item extends BaseItem>(item1: Item, item2: Item) =>
-        item1.value >= item2.value;
+      return (item1: Item, item2: Item) => item1.value >= item2.value;
     } else {
-      return <Item extends BaseItem>(item1: Item, item2: Item) =>
-        item1.value <= item2.value;
+      return (item1: Item, item2: Item) => item1.value <= item2.value;
     }
   }
 }

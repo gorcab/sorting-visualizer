@@ -9,12 +9,10 @@ export class RevertCommand<Item extends BaseItem> implements Command<Item> {
   }
 
   public execute(list: Array<Item>): Array<Item> {
-    const newList = this.command.undo(list);
-    return newList;
+    return this.command.undo(list);
   }
 
   public undo(list: Array<Item>): Array<Item> {
-    const newList = this.command.execute(list);
-    return newList;
+    return this.command.execute(list);
   }
 }

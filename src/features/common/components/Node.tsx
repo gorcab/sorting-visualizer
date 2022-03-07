@@ -7,6 +7,6 @@ export const Node = styled("li", {
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-end",
-  padding: "0 $sm $sm",
+  padding: "0 0 $sm",
   borderRadius: 5,
 });

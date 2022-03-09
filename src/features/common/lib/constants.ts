@@ -20,3 +20,5 @@ export const Keyboard = {
 
 export const MIN_ITEM_HEIGHT = 20;
 export const MAX_ITEM_NUM = 8;
+export const MAX_NODE_HEIGHT = 130;
+export const marginLeftOfNodes = 24;

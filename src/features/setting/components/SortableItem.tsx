@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { marginLeftOfNodes } from "features/common/lib/constants";
 import { CSSProperties } from "react";
 import { Node } from "../../common/components/Node";
 
@@ -29,6 +30,9 @@ export function SortableItem({ id, value }: SortableItemProps) {
         nodeHeight: value,
         opacity: isDragging ? 0.4 : 1,
         cursor: isDragging ? "grabbing" : "grab",
+        [`& + ${Node}`]: {
+          marginLeft: marginLeftOfNodes,
+        },
       }}
       style={style}
       ref={setNodeRef}

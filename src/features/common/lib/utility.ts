@@ -12,15 +12,15 @@ export function getCompareFunc<Item extends BaseItem>(
 ) {
   if (equalTo) {
     if (sortingOrder === "ASC") {
-      return (item1: Item, item2: Item) => item1.value > item2.value;
-    } else {
-      return (item1: Item, item2: Item) => item1.value < item2.value;
-    }
-  } else {
-    if (sortingOrder === "ASC") {
       return (item1: Item, item2: Item) => item1.value >= item2.value;
     } else {
       return (item1: Item, item2: Item) => item1.value <= item2.value;
+    }
+  } else {
+    if (sortingOrder === "ASC") {
+      return (item1: Item, item2: Item) => item1.value > item2.value;
+    } else {
+      return (item1: Item, item2: Item) => item1.value < item2.value;
     }
   }
 }

@@ -1,21 +1,21 @@
-import { BaseItem, Selectable } from "../types";
+import { BaseItem, Pickable } from "../types";
 import { Command } from "./CommandInterface";
 
-export class SelectCommand<Item extends BaseItem & Selectable>
+export class PickCommand<Item extends BaseItem & Pickable>
   implements Command<Item>
 {
-  private selectedIndices: Array<number>;
+  private pickedIndices: Array<number>;
 
-  constructor(...selectedIndices: Array<number>) {
-    this.selectedIndices = selectedIndices;
+  constructor(...pickedIndices: Array<number>) {
+    this.pickedIndices = pickedIndices;
   }
 
   public execute(list: Array<Item>): Array<Item> {
     const newList = list.slice();
-    this.selectedIndices.forEach((idx) => {
+    this.pickedIndices.forEach((idx) => {
       newList[idx] = {
         ...newList[idx],
-        isSelected: true,
+        depth: newList[idx].depth + 1,
       };
     });
 
@@ -24,10 +24,10 @@ export class SelectCommand<Item extends BaseItem & Selectable>
 
   public undo(list: Array<Item>): Array<Item> {
     const newList = list.slice();
-    this.selectedIndices.forEach((idx) => {
+    this.pickedIndices.forEach((idx) => {
       newList[idx] = {
         ...newList[idx],
-        isSelected: false,
+        depth: newList[idx].depth - 1,
       };
     });
 

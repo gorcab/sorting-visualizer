@@ -1,5 +1,8 @@
 import { createStitches } from "@stitches/react";
-import { MIN_ITEM_HEIGHT } from "features/common/lib/constants";
+import {
+  MAX_NODE_HEIGHT,
+  MIN_ITEM_HEIGHT,
+} from "features/common/lib/constants";
 
 export const { css, styled } = createStitches({
   media: {
@@ -13,6 +16,21 @@ export const { css, styled } = createStitches({
 
       "@lg": {
         width: "auto",
+      },
+    }),
+    centeredFlex: () => ({
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }),
+    listDisplay: () => ({
+      display: "flex",
+      justifyContent: "flex-start",
+      height: MAX_NODE_HEIGHT,
+      alignItems: "flex-end",
+
+      "@md": {
+        justifyContent: "center",
       },
     }),
     navOpen: (isOpen: boolean) =>

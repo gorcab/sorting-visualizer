@@ -14,7 +14,6 @@ export function ToolbarButton(props: ToolbarButtonProps) {
   const isFocused = buttonIds[focusedButtonIndex] === buttonId;
   const { onMouseDown, onClick, disabled, ...restProps } = props;
 
-  console.log("toolbar State: ", state);
   useEffect(() => {
     dispatch({ type: "REGISTER_BUTTON", id: buttonId });
     return () => dispatch({ type: "UNREGISTER_BUTTON", id: buttonId });
@@ -22,9 +21,6 @@ export function ToolbarButton(props: ToolbarButtonProps) {
 
   useEffect(() => {
     if (disabled !== undefined) {
-      if (buttonId === "toolbar-button-10") {
-        debugger;
-      }
       dispatch({
         type: "CHANGE_STATE",
         payload: { id: buttonId, disabled: disabled },

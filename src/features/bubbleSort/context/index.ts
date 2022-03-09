@@ -1,2 +1,2 @@
 export { BubbleSortContext } from "./bubbleSortContext";
-export { useBubbleSortAnimationContext } from "./useBubbleSortContext";
+export { useBubbleSortAnimationContext } from "../hooks/useBubbleSortAnimationContext";

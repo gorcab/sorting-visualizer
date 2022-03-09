@@ -1,4 +1,5 @@
 import { BubbleAnimation } from "features/bubbleSort/components/BubbleAnimation";
+import { InsertionAnimation } from "features/insertionSort/components/InsertionAnimation";
 import React from "react";
 import { css } from "stitches.config";
 import { useAlgorithm } from "../contexts/algorithm";
@@ -6,7 +7,7 @@ import { SortingAlgorithm } from "../lib/types";
 
 const animationComponentMap: Record<SortingAlgorithm, React.ElementType> = {
   bubble: BubbleAnimation,
-  insertion: () => <div>Insertion</div>,
+  insertion: InsertionAnimation,
   merge: () => <div>Merge</div>,
   quick: () => <div>Quick</div>,
   selection: () => <div>Selection</div>,

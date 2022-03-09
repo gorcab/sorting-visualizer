@@ -6,8 +6,12 @@ export type BaseItem = {
   isSorted: boolean;
 };
 
-export type SelectableItem = BaseItem & {
+export type Selectable = {
   isSelected: boolean;
+};
+
+export type Pickable = {
+  depth: number;
 };
 
 export type SortingAlgorithm =

@@ -1,21 +1,29 @@
-import { useBubbleSortAnimationContext } from "features/bubbleSort/context";
 import { useEffect, useState } from "react";
 import { css } from "stitches.config";
+import { BaseItem } from "../lib/types";
+import {
+  AdditionalAction,
+  DefaultAction,
+} from "../reducers/sortingAnimationReducer";
 import { AnimationHandlingToolbar } from "./AnimationHandlingToolbar";
 import { RangeSlider } from "./RangeSlider";
 
-type AnimationControllerProps = {
+type AnimationControllerProps<Item extends BaseItem> = {
   animationSectionId: string;
+  currentStep: number;
+  totalStep: number;
+  dispatch: React.Dispatch<DefaultAction | AdditionalAction<Item>>;
 };
 
 export type AutoPlayState = "start" | "stop" | "replay";
 
-export function AnimationController({
+export function AnimationController<Item extends BaseItem>({
   animationSectionId,
-}: AnimationControllerProps) {
-  const { state, dispatch } = useBubbleSortAnimationContext();
+  currentStep,
+  totalStep,
+  dispatch,
+}: AnimationControllerProps<Item>) {
   const [autoPlayState, setAutoPlayState] = useState<AutoPlayState>("stop");
-  const { currentStep, totalStep } = state;
 
   useEffect(() => {
     if (totalStep === currentStep) {
@@ -40,6 +48,7 @@ export function AnimationController({
       setAutoPlayState("start");
     }
   };
+  const endAnimation = () => dispatch({ type: "END_ANIMATION" });
 
   return (
     <div className={controllerClass()}>
@@ -50,10 +59,13 @@ export function AnimationController({
         onStepChange={stepChangeHandler}
       />
       <AnimationHandlingToolbar
+        totalStep={totalStep}
+        currentStep={currentStep}
         autoPlayState={autoPlayState}
         onPrevStepClick={goToPrevStep}
         onAutoPlayClick={changeAutoPlayState}
         onNextStepClick={goToNextStep}
+        onResetClick={endAnimation}
         animationSectonId={animationSectionId}
       />
     </div>

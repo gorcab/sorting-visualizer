@@ -17,16 +17,12 @@ export function bubbleSort(
   let isSwapped = false;
   let firstInitalIdx = -1,
     secondInitialIdx = -1;
-  // const selectedIndicesSet = new Set<number>();
 
   for (let i = 0; i < list.length; i++) {
     isSwapped = false;
-    // selectedIndicesSet.clear();
     for (let j = 0; j < list.length - 1 - i; j++) {
       firstInitalIdx = _list[j].initialIndex;
       secondInitialIdx = _list[j + 1].initialIndex;
-      // selectedIndicesSet.add(firstInitalIdx);
-      // selectedIndicesSet.add(secondInitialIdx);
 
       commands.push(new SelectCommand(firstInitalIdx, secondInitialIdx));
 

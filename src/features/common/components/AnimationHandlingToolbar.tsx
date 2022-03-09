@@ -3,31 +3,31 @@ import { ReactComponent as NextStepIcon } from "../../../nextStep.svg";
 import { ReactComponent as PlayIcon } from "../../../play.svg";
 import { ReactComponent as PauseIcon } from "../../../pause.svg";
 import { ReactComponent as ReplayIcon } from "../../../replay.svg";
-import { useBubbleSortAnimationContext } from "features/bubbleSort/context";
 import { Toolbar } from "./Toolbar";
 import { css } from "stitches.config";
 import { AutoPlayState } from "./AnimationController";
 
 type AnimationHandlingToolbarProps = {
   animationSectonId: string;
+  currentStep: number;
+  totalStep: number;
   autoPlayState: AutoPlayState;
   onNextStepClick: () => void;
   onPrevStepClick: () => void;
   onAutoPlayClick: () => void;
+  onResetClick: () => void;
 };
 
 export function AnimationHandlingToolbar({
   animationSectonId,
+  currentStep,
+  totalStep,
   autoPlayState,
   onPrevStepClick,
   onAutoPlayClick,
   onNextStepClick,
+  onResetClick,
 }: AnimationHandlingToolbarProps) {
-  const { state, dispatch } = useBubbleSortAnimationContext();
-  const { totalStep, currentStep } = state;
-
-  const endAnimation = () => dispatch({ type: "END_ANIMATION" });
-
   return (
     <Toolbar label="Operate animation" ariaControls={animationSectonId}>
       <div className={operationBtnContainerClass()}>
@@ -62,7 +62,7 @@ export function AnimationHandlingToolbar({
           Go to Next Step
         </Toolbar.IconButton>
       </div>
-      <Toolbar.Button className={resetBtnClass()} onClick={endAnimation}>
+      <Toolbar.Button className={resetBtnClass()} onClick={onResetClick}>
         Reset
       </Toolbar.Button>
     </Toolbar>

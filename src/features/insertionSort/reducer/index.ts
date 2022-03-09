@@ -1,36 +1,37 @@
 import { Command } from "features/common/lib/commands/CommandInterface";
-import { BaseItem, Selectable } from "features/common/lib/types";
+import { BaseItem, Selectable, Pickable } from "features/common/lib/types";
 import {
   AdditionalAction,
   ADDITIONAL_ACTION_TYPES,
   BaseState,
 } from "features/common/reducers/sortingAnimationReducer";
-import { bubbleSort } from "../lib/bubbleSort";
+import { insertionSort } from "../lib/insertionSort";
 
-export type BubbleSortItem = BaseItem & Selectable;
+export type InsertionSortItem = BaseItem & Selectable & Pickable;
 
-export type BubbleSortState = BaseState<BubbleSortItem>;
+export type InsertionSortState = BaseState<InsertionSortItem>;
 
-type BubbleSortReducerMap = {
+type InsertionSortReducerMap = {
   [key in keyof typeof ADDITIONAL_ACTION_TYPES]: (
-    state: BubbleSortState,
-    action: Extract<AdditionalAction<BubbleSortItem>, { type: key }>
-  ) => BubbleSortState;
+    state: InsertionSortState,
+    action: Extract<AdditionalAction<InsertionSortItem>, { type: key }>
+  ) => InsertionSortState;
 };
 
-export function numToBubbleSortItemMappingFunc(num: number, index: number) {
-  const bubbleSortItem: BubbleSortItem = {
+export function numToInsertionSortItemMappingFunc(num: number, index: number) {
+  const insertionSortItem: InsertionSortItem = {
     id: index + 1,
     value: num,
     currentIndex: index,
     initialIndex: index,
     isSelected: false,
+    depth: 0,
     isSorted: false,
   };
-  return bubbleSortItem;
+  return insertionSortItem;
 }
 
-export const bubbleSortReducerMap: BubbleSortReducerMap = {
+export const insertionSortReducerMap: InsertionSortReducerMap = {
   ADD_ITEM: (state, action) => {
     const list = state.list.concat(action.payload);
     return { ...state, list };
@@ -39,7 +40,7 @@ export const bubbleSortReducerMap: BubbleSortReducerMap = {
     const {
       payload: { list, sortingOrder },
     } = action;
-    const commands: Array<Command<BubbleSortItem>> = bubbleSort(
+    const commands: Array<Command<InsertionSortItem>> = insertionSort(
       list,
       sortingOrder
     );
@@ -48,9 +49,9 @@ export const bubbleSortReducerMap: BubbleSortReducerMap = {
     return {
       ...state,
       sortingOrder,
+      commands,
       list,
       totalStep,
-      commands,
       currentStep,
       startAnimation: true,
     };

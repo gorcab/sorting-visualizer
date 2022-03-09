@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { BubbleSortContext } from "./bubbleSortContext";
+import { BubbleSortContext } from "../context/bubbleSortContext";
 
 export function useBubbleSortAnimationContext() {
   const context = useContext(BubbleSortContext);
 
   if (!context) {
     throw new Error(
-      `useBubbleSortContext hook must be used within <BubbleSortAnimationProvider />`
+      `useBubbleSortAnimationContext hook must be used within <BubbleSortAnimationProvider />`
     );
   }
 

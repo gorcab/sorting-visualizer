@@ -21,7 +21,7 @@ import { useState } from "react";
 import { OverlayItem } from "./OverlayItem";
 import { Portal } from "../../common/components/Portal";
 import { SortableItem } from "./SortableItem";
-import { ListDisplay } from "features/common/components/ListDisplay";
+import { css } from "stitches.config";
 
 type Item = {
   id: string;
@@ -81,11 +81,11 @@ export function SortableList({
       onDragCancel={handleDragCancel}
     >
       <SortableContext items={list} strategy={horizontalListSortingStrategy}>
-        <ListDisplay id={ulElementId}>
+        <ul className={listClass()} id={ulElementId}>
           {list.map(({ id, value }) => (
             <SortableItem key={id} id={id} value={value} />
           ))}
-        </ListDisplay>
+        </ul>
       </SortableContext>
       <Portal displayName="dnd-overlay">
         <DragOverlay
@@ -102,3 +102,7 @@ export function SortableList({
     </DndContext>
   );
 }
+
+const listClass = css({
+  listDisplay: true,
+});

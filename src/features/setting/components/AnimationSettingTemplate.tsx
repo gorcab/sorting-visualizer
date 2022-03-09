@@ -6,7 +6,7 @@ import { MAX_ITEM_NUM } from "../../common/lib/constants";
 import { SortingOrder } from "../../common/lib/types";
 import { ListHandlingToolbar } from "./ListHandlingToolbar";
 import { SelectSortingOrderModal } from "./SelectSortingOrderModal";
-import { ListContainer } from "features/common/components/ListContainer";
+import { css } from "stitches.config";
 
 type AnimationSettingTemplateProps = {
   onInit: (list: Array<number>, sortingOrder: SortingOrder) => void;
@@ -41,9 +41,9 @@ export function AnimationSettingTemplate({
 
   return (
     <>
-      <ListContainer>
+      <div className={containerClass()}>
         <SortableList list={list} reorderList={reorderList} ulElementId={id} />
-      </ListContainer>
+      </div>
       <ListHandlingToolbar
         onAddClick={addListItem}
         onDeleteClick={deleteListItem}
@@ -64,3 +64,15 @@ export function AnimationSettingTemplate({
     </>
   );
 }
+
+const containerClass = css({
+  flex: 1,
+  padding: "$md",
+  display: "flex",
+  alignItems: "center",
+  overflow: "auto",
+
+  "@md": {
+    justifyContent: "center",
+  },
+});

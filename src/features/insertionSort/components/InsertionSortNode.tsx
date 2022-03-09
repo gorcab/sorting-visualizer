@@ -1,19 +1,24 @@
 import { Node } from "features/common/components/Node";
-import { marginLeftOfNodes } from "features/common/lib/constants";
 import { motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { BubbleSortItem } from "../reducer";
+import { InsertionSortItem } from "../reducer";
 
-type BubbleSortNodeProps = BubbleSortItem;
+type InsertionSortNodeProps = InsertionSortItem;
+
+const marginLeft = 24;
 
 type VariantsCustomProps = {
   indexDiff: number;
   translateDistance: number;
+  depth: number;
 };
 
 const variants = {
-  isSwapping: ({ indexDiff, translateDistance }: VariantsCustomProps) => ({
+  move: ({ indexDiff, translateDistance }: VariantsCustomProps) => ({
     x: indexDiff * translateDistance,
+  }),
+  pick: ({ depth }: VariantsCustomProps) => ({
+    y: depth * 200,
   }),
   notSelected: {
     opacity: 0.4,
@@ -29,19 +34,20 @@ const variants = {
 
 const AnimatedNode = motion(Node);
 
-export function BubbleSortNode({
-  value,
+export function InsertionSortNode({
+  isSorted,
   currentIndex,
+  depth,
   initialIndex,
   isSelected,
-  isSorted,
-}: BubbleSortNodeProps) {
+  value,
+}: InsertionSortNodeProps) {
   const [translateDistance, setTranslateDistance] = useState(0);
-  const nodeRef = useRef<HTMLLIElement>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!nodeRef.current) return;
-    setTranslateDistance(nodeRef.current.offsetWidth + marginLeftOfNodes);
+    setTranslateDistance(nodeRef.current.offsetWidth + marginLeft);
   }, []);
 
   useLayoutEffect(() => {
@@ -62,17 +68,19 @@ export function BubbleSortNode({
     if (isSorted) {
       animateArray.push("sorted");
     }
-
     if (currentIndex !== initialIndex) {
-      animateArray.push("isSwapping");
+      animateArray.push("move");
     }
-
+    if (depth > 0) {
+      animateArray.push("pick");
+    }
     return animateArray;
-  }, [isSelected, isSorted, currentIndex, initialIndex]);
+  }, [isSelected, isSorted, currentIndex, initialIndex, depth]);
 
-  const customValue = {
+  const customValue: VariantsCustomProps = {
     indexDiff: currentIndex - initialIndex,
     translateDistance,
+    depth,
   };
 
   return (
@@ -84,7 +92,7 @@ export function BubbleSortNode({
       css={{
         nodeHeight: value,
         [`& + ${Node}`]: {
-          marginLeft: marginLeftOfNodes,
+          marginLeft,
         },
       }}
     >

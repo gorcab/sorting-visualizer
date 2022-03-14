@@ -1,3 +1,4 @@
+import { BaseState } from "features/common/reducers/sortingAnimationReducer";
 import { BaseItem } from "../types";
 import { Command } from "./CommandInterface";
 
@@ -7,34 +8,40 @@ type IndexInfo = {
   indexAfterMoving: number;
 };
 
-export class MoveCommand<Item extends BaseItem> implements Command<Item> {
+export class MoveCommand<Item extends BaseItem, State extends BaseState<Item>>
+  implements Command<Item, State>
+{
   private indexInfo: IndexInfo;
 
   constructor(indexInfo: IndexInfo) {
     this.indexInfo = indexInfo;
   }
 
-  public execute(list: Array<Item>): Array<Item> {
-    const newList = list.slice();
+  public execute(state: State): State {
+    const newState = { ...state };
+    const newList = newState.list.slice();
     const { initialIndex, indexAfterMoving } = this.indexInfo;
 
     newList[initialIndex] = {
       ...newList[initialIndex],
       currentIndex: indexAfterMoving,
     };
+    newState.list = newList;
 
-    return newList;
+    return newState;
   }
 
-  public undo(list: Array<Item>): Array<Item> {
-    const newList = list.slice();
+  public undo(state: State): State {
+    const newState = { ...state };
+    const newList = newState.list.slice();
     const { initialIndex, indexBeforeMoving } = this.indexInfo;
 
     newList[initialIndex] = {
       ...newList[initialIndex],
       currentIndex: indexBeforeMoving,
     };
+    newState.list = newList;
 
-    return newList;
+    return newState;
   }
 }

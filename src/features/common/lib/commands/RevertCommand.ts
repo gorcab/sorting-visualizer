@@ -1,18 +1,21 @@
+import { BaseState } from "features/common/reducers/sortingAnimationReducer";
 import { BaseItem } from "../types";
 import { Command } from "./CommandInterface";
 
-export class RevertCommand<Item extends BaseItem> implements Command<Item> {
-  private command: Command<Item>;
+export class RevertCommand<Item extends BaseItem, State extends BaseState<Item>>
+  implements Command<Item, State>
+{
+  private command: Command<Item, State>;
 
-  constructor(command: Command<Item>) {
+  constructor(command: Command<Item, State>) {
     this.command = command;
   }
 
-  public execute(list: Array<Item>): Array<Item> {
-    return this.command.undo(list);
+  public execute(state: State): State {
+    return this.command.undo(state);
   }
 
-  public undo(list: Array<Item>): Array<Item> {
-    return this.command.execute(list);
+  public undo(state: State): State {
+    return this.command.execute(state);
   }
 }

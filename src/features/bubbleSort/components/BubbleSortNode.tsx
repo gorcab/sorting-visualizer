@@ -1,8 +1,8 @@
 import { Node } from "features/common/components/Node";
-import { marginLeftOfNodes } from "features/common/lib/constants";
+import { MARGIN_LEFT, TRANSLATE_DISTANCE } from "features/common/lib/constants";
 import { motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { BubbleSortItem } from "../reducer";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import { BubbleSortItem } from "../types";
 
 type BubbleSortNodeProps = BubbleSortItem;
 
@@ -36,13 +36,7 @@ export function BubbleSortNode({
   isSelected,
   isSorted,
 }: BubbleSortNodeProps) {
-  const [translateDistance, setTranslateDistance] = useState(0);
   const nodeRef = useRef<HTMLLIElement>(null);
-
-  useEffect(() => {
-    if (!nodeRef.current) return;
-    setTranslateDistance(nodeRef.current.offsetWidth + marginLeftOfNodes);
-  }, []);
 
   useLayoutEffect(() => {
     if (!nodeRef.current) return;
@@ -72,7 +66,7 @@ export function BubbleSortNode({
 
   const customValue = {
     indexDiff: currentIndex - initialIndex,
-    translateDistance,
+    translateDistance: TRANSLATE_DISTANCE,
   };
 
   return (
@@ -84,7 +78,7 @@ export function BubbleSortNode({
       css={{
         nodeHeight: value,
         [`& + ${Node}`]: {
-          marginLeft: marginLeftOfNodes,
+          marginLeft: MARGIN_LEFT,
         },
       }}
     >

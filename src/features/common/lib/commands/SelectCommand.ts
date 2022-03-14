@@ -1,8 +1,11 @@
+import { BaseState } from "features/common/reducers/sortingAnimationReducer";
 import { BaseItem, Selectable } from "../types";
 import { Command } from "./CommandInterface";
 
-export class SelectCommand<Item extends BaseItem & Selectable>
-  implements Command<Item>
+export class SelectCommand<
+  Item extends BaseItem & Selectable,
+  State extends BaseState<Item>
+> implements Command<Item, State>
 {
   private selectedIndices: Array<number>;
 
@@ -10,27 +13,31 @@ export class SelectCommand<Item extends BaseItem & Selectable>
     this.selectedIndices = selectedIndices;
   }
 
-  public execute(list: Array<Item>): Array<Item> {
-    const newList = list.slice();
+  public execute(state: State): State {
+    const newState = { ...state };
+    const newList = newState.list.slice();
     this.selectedIndices.forEach((idx) => {
       newList[idx] = {
         ...newList[idx],
         isSelected: true,
       };
     });
+    newState.list = newList;
 
-    return newList;
+    return newState;
   }
 
-  public undo(list: Array<Item>): Array<Item> {
-    const newList = list.slice();
+  public undo(state: State): State {
+    const newState = { ...state };
+    const newList = newState.list.slice();
     this.selectedIndices.forEach((idx) => {
       newList[idx] = {
         ...newList[idx],
         isSelected: false,
       };
     });
+    newState.list = newList;
 
-    return newList;
+    return newState;
   }
 }

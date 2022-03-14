@@ -5,25 +5,27 @@ import { MoveCommand } from "features/common/lib/commands/MoveCommand";
 import { PickCommand } from "features/common/lib/commands/PickCommand";
 import { RevertCommand } from "features/common/lib/commands/RevertCommand";
 import { SelectCommand } from "features/common/lib/commands/SelectCommand";
+
 import { SortingOrder } from "features/common/lib/types";
 import { getCompareFunc } from "features/common/lib/utility";
-import { InsertionSortItem } from "../reducer";
-
+import { InsertionSortItem, InsertionSortState } from "../types";
 export function insertionSort(
   list: Array<InsertionSortItem>,
   sortingOrder: SortingOrder
-): Array<Command<InsertionSortItem>> {
+): Array<Command<InsertionSortItem, InsertionSortState>> {
   const _list = list.slice();
-  const commands: Array<Command<InsertionSortItem>> = [];
+  const commands: Array<Command<InsertionSortItem, InsertionSortState>> = [];
   const compare = getCompareFunc(sortingOrder);
 
   for (let i = 1; i < _list.length; i++) {
     const itemToInsert = _list[i];
 
     commands.push(
-      new CompositeCommand(
+      new CompositeCommand<InsertionSortItem, InsertionSortState>(
         new SelectCommand(itemToInsert.initialIndex),
-        new PickCommand(itemToInsert.initialIndex)
+        new PickCommand<InsertionSortItem, InsertionSortState>(
+          itemToInsert.initialIndex
+        )
       )
     );
 
@@ -35,7 +37,7 @@ export function insertionSort(
       }
 
       commands.push(
-        new MoveCommand({
+        new MoveCommand<InsertionSortItem, InsertionSortState>({
           initialIndex: _list[j].initialIndex,
           indexBeforeMoving: j,
           indexAfterMoving: j + 1,
@@ -46,9 +48,13 @@ export function insertionSort(
     }
 
     commands.push(
-      new CompositeCommand(
-        new RevertCommand(new PickCommand(itemToInsert.initialIndex)),
-        new MoveCommand({
+      new CompositeCommand<InsertionSortItem, InsertionSortState>(
+        new RevertCommand<InsertionSortItem, InsertionSortState>(
+          new PickCommand<InsertionSortItem, InsertionSortState>(
+            itemToInsert.initialIndex
+          )
+        ),
+        new MoveCommand<InsertionSortItem, InsertionSortState>({
           initialIndex: itemToInsert.initialIndex,
           indexBeforeMoving: i,
           indexAfterMoving: j + 1,
@@ -63,7 +69,11 @@ export function insertionSort(
       { length: i - j + 1 },
       (_, index) => _list[j + index].initialIndex
     );
-    commands.push(new RevertCommand(new SelectCommand(...selectedIndices)));
+    commands.push(
+      new RevertCommand<InsertionSortItem, InsertionSortState>(
+        new SelectCommand(...selectedIndices)
+      )
+    );
   }
 
   commands.push(new CompleteCommand(..._list.map((_, index) => index)));

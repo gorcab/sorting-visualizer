@@ -1,18 +1,15 @@
+import { AnimationHandlingToolbar } from "features/common/components/AnimationHandlingToolbar";
+import { RangeSlider } from "features/common/components/RangeSlider";
+import { BaseItem } from "features/common/lib/types";
+import { AnimationAction } from "features/common/reducers/sortingAnimationReducer";
 import { useEffect, useState } from "react";
 import { css } from "stitches.config";
-import { BaseItem } from "../lib/types";
-import {
-  AdditionalAction,
-  DefaultAction,
-} from "../reducers/sortingAnimationReducer";
-import { AnimationHandlingToolbar } from "./AnimationHandlingToolbar";
-import { RangeSlider } from "./RangeSlider";
 
 type AnimationControllerProps<Item extends BaseItem> = {
   animationSectionId: string;
   currentStep: number;
   totalStep: number;
-  dispatch: React.Dispatch<DefaultAction | AdditionalAction<Item>>;
+  dispatch: React.Dispatch<AnimationAction<Item>>;
 };
 
 export type AutoPlayState = "start" | "stop" | "replay";

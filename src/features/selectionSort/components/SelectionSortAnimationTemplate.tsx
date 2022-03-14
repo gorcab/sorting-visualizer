@@ -1,21 +1,29 @@
 import { AnimationController } from "features/common/components/AnimationController";
-import { AnimationDisplay } from "features/common/components/AnimationDisplay";
+import { DefaultAnimationDisplay } from "features/common/components/AnimationDisplay/DefaultAnimationDisplay";
 import { useId } from "features/common/hooks/useId";
-import { useSelectionSortAnimationContext } from "../hooks/useSelectionSortAnimationContext";
-import { SelectionSortNode } from "./SelectionSortNode";
+import { AnimationAction } from "features/common/reducers/sortingAnimationReducer";
+import { SelectionSortNode } from "../components/SelectionSortNode";
+import { SelectionSortItem, SelectionSortState } from "../types";
 
-export function SelectionSortAnimationTemplate() {
+type SelectionSortAnimationTemplateProps = {
+  state: SelectionSortState;
+  dispatch: React.Dispatch<AnimationAction<SelectionSortItem>>;
+};
+
+export function SelectionSortAnimationTemplate({
+  state,
+  dispatch,
+}: SelectionSortAnimationTemplateProps) {
   const id = useId("animate-list");
-  const { state, dispatch } = useSelectionSortAnimationContext();
   const { list, currentStep, totalStep } = state;
 
   return (
     <>
-      <AnimationDisplay animationSectionId={id}>
+      <DefaultAnimationDisplay animationSectionId={id}>
         {list.map((item) => (
           <SelectionSortNode key={item.id} {...item} />
         ))}
-      </AnimationDisplay>
+      </DefaultAnimationDisplay>
       <AnimationController
         dispatch={dispatch}
         currentStep={currentStep}

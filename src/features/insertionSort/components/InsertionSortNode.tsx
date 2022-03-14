@@ -1,11 +1,14 @@
 import { Node } from "features/common/components/Node";
+import {
+  TRANSLATE_DISTANCE,
+  MARGIN_LEFT,
+  MAX_NODE_HEIGHT,
+} from "features/common/lib/constants";
 import { motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { InsertionSortItem } from "../reducer";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import { InsertionSortItem } from "../types";
 
 type InsertionSortNodeProps = InsertionSortItem;
-
-const marginLeft = 24;
 
 type VariantsCustomProps = {
   indexDiff: number;
@@ -18,7 +21,7 @@ const variants = {
     x: indexDiff * translateDistance,
   }),
   pick: ({ depth }: VariantsCustomProps) => ({
-    y: depth * 200,
+    y: depth * MAX_NODE_HEIGHT + 20,
   }),
   notSelected: {
     opacity: 0.4,
@@ -42,13 +45,7 @@ export function InsertionSortNode({
   isSelected,
   value,
 }: InsertionSortNodeProps) {
-  const [translateDistance, setTranslateDistance] = useState(0);
-  const nodeRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!nodeRef.current) return;
-    setTranslateDistance(nodeRef.current.offsetWidth + marginLeft);
-  }, []);
+  const nodeRef = useRef<HTMLLIElement>(null);
 
   useLayoutEffect(() => {
     if (!nodeRef.current) return;
@@ -79,7 +76,7 @@ export function InsertionSortNode({
 
   const customValue: VariantsCustomProps = {
     indexDiff: currentIndex - initialIndex,
-    translateDistance,
+    translateDistance: TRANSLATE_DISTANCE,
     depth,
   };
 
@@ -92,7 +89,7 @@ export function InsertionSortNode({
       css={{
         nodeHeight: value,
         [`& + ${Node}`]: {
-          marginLeft,
+          marginLeft: MARGIN_LEFT,
         },
       }}
     >

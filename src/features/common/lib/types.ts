@@ -14,6 +14,10 @@ export type Pickable = {
   depth: number;
 };
 
+export type Focusable = {
+  isFocused: boolean;
+};
+
 export type SortingAlgorithm =
   | "bubble"
   | "selection"

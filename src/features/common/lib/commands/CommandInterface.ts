@@ -1,6 +1,7 @@
+import { BaseState } from "features/common/reducers/sortingAnimationReducer";
 import { BaseItem } from "../types";
 
-export interface Command<Item extends BaseItem = BaseItem> {
-  execute: (list: Array<Item>) => Array<Item>;
-  undo: (list: Array<Item>) => Array<Item>;
+export interface Command<Item extends BaseItem, State extends BaseState<Item>> {
+  execute: (state: State) => State;
+  undo: (state: State) => State;
 }

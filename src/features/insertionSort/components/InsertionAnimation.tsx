@@ -1,36 +1,31 @@
 import { useSortingAnimation } from "features/common/hooks/useSortingAnimation";
+import { Command } from "features/common/lib/commands/CommandInterface";
 import { SortingOrder } from "features/common/lib/types";
 import { AnimationSettingTemplate } from "features/setting/components/AnimationSettingTemplate";
-import { InsertionSortContext } from "../context/insertionSortContext";
-import {
-  insertionSortReducerMap,
-  numToInsertionSortItemMappingFunc,
-} from "../reducer";
+import { numToInsertionSortItemMappingFunc } from "../lib/helper";
+import { insertionSort } from "../lib/insertionSort";
+import { InsertionSortItem, InsertionSortState } from "../types";
 import { InsertionSortAnimationTemplate } from "./InsertionSortAnimationTemplate";
 
 export function InsertionAnimation() {
   const { state, dispatch } = useSortingAnimation({
-    reducerMap: insertionSortReducerMap,
     initialState: {
-      commands: [],
+      commands: [] as Array<Command<InsertionSortItem, InsertionSortState>>,
       currentStep: 0,
-      sortingOrder: "ASC",
-      list: [],
-      startAnimation: false,
       totalStep: 0,
+      list: [],
+      sortingOrder: "ASC",
+      startAnimation: false,
     },
+    numToItemMappingFunc: numToInsertionSortItemMappingFunc,
+    sortingAlgorithm: insertionSort,
   });
-
-  const contextValue = {
-    state,
-    dispatch,
-  };
 
   const initAnimation = (nums: Array<number>, sortingOrder: SortingOrder) => {
     dispatch({
-      type: "INITIALIZE",
+      type: "START_ANIMATION",
       payload: {
-        list: nums.map(numToInsertionSortItemMappingFunc),
+        list: nums,
         sortingOrder,
       },
     });
@@ -39,9 +34,7 @@ export function InsertionAnimation() {
   const { startAnimation } = state;
 
   return startAnimation ? (
-    <InsertionSortContext.Provider value={contextValue}>
-      <InsertionSortAnimationTemplate />
-    </InsertionSortContext.Provider>
+    <InsertionSortAnimationTemplate state={state} dispatch={dispatch} />
   ) : (
     <AnimationSettingTemplate onInit={initAnimation} />
   );

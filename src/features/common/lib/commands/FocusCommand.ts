@@ -1,25 +1,26 @@
 import { BaseState } from "features/common/reducers/sortingAnimationReducer";
-import { BaseItem } from "../types";
+import { BaseItem, Focusable } from "../types";
 import { Command } from "./CommandInterface";
 
-export class CompleteCommand<
-  Item extends BaseItem,
-  State extends BaseState<Item>
+export class FocusCommand<
+  Item extends BaseItem & Focusable,
+  State extends BaseState<Item> & Focusable
 > implements Command<Item, State>
 {
-  private indices: Array<number>;
+  private focusedIndices: Array<number>;
 
-  constructor(...indices: Array<number>) {
-    this.indices = indices;
+  constructor(...focusedIndices: Array<number>) {
+    this.focusedIndices = focusedIndices;
   }
 
   public execute(state: State): State {
     const newState = { ...state };
     const newList = newState.list.slice();
-    this.indices.forEach((index) => {
+    newState.isFocused = true;
+    this.focusedIndices.forEach((index) => {
       newList[index] = {
         ...newList[index],
-        isSorted: true,
+        isFocused: true,
       };
     });
     newState.list = newList;
@@ -30,10 +31,11 @@ export class CompleteCommand<
   public undo(state: State): State {
     const newState = { ...state };
     const newList = newState.list.slice();
-    this.indices.forEach((index) => {
+    newState.isFocused = false;
+    this.focusedIndices.forEach((index) => {
       newList[index] = {
         ...newList[index],
-        isSorted: false,
+        isFocused: false,
       };
     });
     newState.list = newList;

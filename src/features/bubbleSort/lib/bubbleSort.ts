@@ -5,14 +5,14 @@ import { SelectCommand } from "features/common/lib/commands/SelectCommand";
 import { SwapCommand } from "features/common/lib/commands/SwapCommand";
 import { SortingOrder } from "features/common/lib/types";
 import { getCompareFunc } from "features/common/lib/utility";
-import { BubbleSortItem } from "../reducer";
+import { BubbleSortItem, BubbleSortState } from "../types";
 
 export function bubbleSort(
   list: Array<BubbleSortItem>,
   sortingOrder: SortingOrder
-): Array<Command<BubbleSortItem>> {
+): Array<Command<BubbleSortItem, BubbleSortState>> {
   const _list = list.slice();
-  const commands: Array<Command<BubbleSortItem>> = [];
+  const commands: Array<Command<BubbleSortItem, BubbleSortState>> = [];
   const compare = getCompareFunc<BubbleSortItem>(sortingOrder);
   let isSwapped = false;
   let firstInitalIdx = -1,
@@ -30,7 +30,7 @@ export function bubbleSort(
         isSwapped = true;
 
         commands.push(
-          new SwapCommand<BubbleSortItem>(
+          new SwapCommand(
             { initialIndex: _list[j].initialIndex, currentIndex: j + 1 },
             { initialIndex: _list[j + 1].initialIndex, currentIndex: j }
           )
@@ -39,8 +39,11 @@ export function bubbleSort(
       }
 
       commands.push(
-        new RevertCommand<BubbleSortItem>(
-          new SelectCommand<BubbleSortItem>(firstInitalIdx, secondInitialIdx)
+        new RevertCommand(
+          new SelectCommand<BubbleSortItem, BubbleSortState>(
+            firstInitalIdx,
+            secondInitialIdx
+          )
         )
       );
     }
@@ -50,14 +53,12 @@ export function bubbleSort(
         { length: _list.length - i },
         (_, index) => _list[index].initialIndex
       );
-      commands.push(new CompleteCommand<BubbleSortItem>(...selectedIndices));
+      commands.push(new CompleteCommand(...selectedIndices));
       return commands;
     }
 
     commands.push(
-      new CompleteCommand<BubbleSortItem>(
-        _list[_list.length - 1 - i].initialIndex
-      )
+      new CompleteCommand(_list[_list.length - 1 - i].initialIndex)
     );
   }
 

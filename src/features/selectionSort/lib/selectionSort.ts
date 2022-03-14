@@ -6,14 +6,14 @@ import { SelectCommand } from "features/common/lib/commands/SelectCommand";
 import { SwapCommand } from "features/common/lib/commands/SwapCommand";
 import { SortingOrder } from "features/common/lib/types";
 import { getCompareFunc } from "features/common/lib/utility";
-import { SelectionSortItem } from "../reducer";
+import { SelectionSortItem, SelectionSortState } from "../types";
 
 export function selectionSort(
   list: Array<SelectionSortItem>,
   sortingOrder: SortingOrder
-): Array<Command<SelectionSortItem>> {
+): Array<Command<SelectionSortItem, SelectionSortState>> {
   const _list = list.slice();
-  const commands: Array<Command<SelectionSortItem>> = [];
+  const commands: Array<Command<SelectionSortItem, SelectionSortState>> = [];
   const compare = getCompareFunc(sortingOrder);
   let swapIndex: number = -1;
 
@@ -25,18 +25,22 @@ export function selectionSort(
       commands.push(new SelectCommand(_list[j].initialIndex));
       if (compare(_list[swapIndex], _list[j])) {
         commands.push(
-          new CompositeCommand(
-            new RevertCommand(
+          new CompositeCommand<SelectionSortItem, SelectionSortState>(
+            new RevertCommand<SelectionSortItem, SelectionSortState>(
               new CompleteCommand(_list[swapIndex].initialIndex)
             ),
-            new RevertCommand(new SelectCommand(_list[j].initialIndex)),
+            new RevertCommand<SelectionSortItem, SelectionSortState>(
+              new SelectCommand(_list[j].initialIndex)
+            ),
             new CompleteCommand(_list[j].initialIndex)
           )
         );
         swapIndex = j;
       } else {
         commands.push(
-          new RevertCommand(new SelectCommand(_list[j].initialIndex))
+          new RevertCommand<SelectionSortItem, SelectionSortState>(
+            new SelectCommand(_list[j].initialIndex)
+          )
         );
       }
     }

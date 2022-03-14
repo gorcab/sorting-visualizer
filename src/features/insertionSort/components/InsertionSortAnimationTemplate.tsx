@@ -1,20 +1,29 @@
 import { AnimationController } from "features/common/components/AnimationController";
-import { AnimationDisplay } from "features/common/components/AnimationDisplay";
+import { DefaultAnimationDisplay } from "features/common/components/AnimationDisplay/DefaultAnimationDisplay";
 import { useId } from "features/common/hooks/useId";
-import { useInsertionSortAnimationContext } from "../hooks/useInsertionSortAnimationContext";
+import { AnimationAction } from "features/common/reducers/sortingAnimationReducer";
+import { InsertionSortItem, InsertionSortState } from "../types";
 import { InsertionSortNode } from "./InsertionSortNode";
 
-export function InsertionSortAnimationTemplate() {
+type InsertionSortAnimationTemplateProps = {
+  state: InsertionSortState;
+  dispatch: React.Dispatch<AnimationAction<InsertionSortItem>>;
+};
+
+export function InsertionSortAnimationTemplate({
+  state,
+  dispatch,
+}: InsertionSortAnimationTemplateProps) {
   const id = useId("animate-list");
-  const { state, dispatch } = useInsertionSortAnimationContext();
   const { list, totalStep, currentStep } = state;
+
   return (
     <>
-      <AnimationDisplay animationSectionId={id}>
+      <DefaultAnimationDisplay animationSectionId={id}>
         {list.map((item) => (
           <InsertionSortNode key={item.id} {...item} />
         ))}
-      </AnimationDisplay>
+      </DefaultAnimationDisplay>
       <AnimationController
         dispatch={dispatch}
         currentStep={currentStep}

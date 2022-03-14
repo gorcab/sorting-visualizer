@@ -1,46 +1,40 @@
 import { useSortingAnimation } from "features/common/hooks/useSortingAnimation";
+import { Command } from "features/common/lib/commands/CommandInterface";
 import { SortingOrder } from "features/common/lib/types";
-import { AnimationSettingTemplate } from "features/setting/components/AnimationSettingTemplate";
-import { BubbleSortContext } from "../context";
-import {
-  bubbleSortReducerMap,
-  numToBubbleSortItemMappingFunc,
-} from "../reducer";
 import { BubbleSortAnimationTemplate } from "./BubbleSortAnimationTemplate";
+import { AnimationSettingTemplate } from "features/setting/components/AnimationSettingTemplate";
+import { bubbleSort } from "../lib/bubbleSort";
+import { BubbleSortItem, BubbleSortState } from "../types";
+import { numToBubbleSortItemMappingFunc } from "../lib/helper";
 
 export function BubbleAnimation() {
   const { state, dispatch } = useSortingAnimation({
-    reducerMap: bubbleSortReducerMap,
     initialState: {
-      commands: [],
-      list: [],
+      commands: [] as Array<Command<BubbleSortItem, BubbleSortState>>,
       currentStep: 0,
+      list: [],
       sortingOrder: "ASC",
       startAnimation: false,
       totalStep: 0,
     },
+    numToItemMappingFunc: numToBubbleSortItemMappingFunc,
+    sortingAlgorithm: bubbleSort,
   });
-
-  const contextValue = {
-    state,
-    dispatch,
-  };
 
   const initAnimation = (nums: Array<number>, sortingOrder: SortingOrder) => {
     dispatch({
-      type: "INITIALIZE",
+      type: "START_ANIMATION",
       payload: {
-        list: nums.map(numToBubbleSortItemMappingFunc),
+        list: nums,
         sortingOrder,
       },
     });
   };
 
   const { startAnimation } = state;
+
   return startAnimation ? (
-    <BubbleSortContext.Provider value={contextValue}>
-      <BubbleSortAnimationTemplate />
-    </BubbleSortContext.Provider>
+    <BubbleSortAnimationTemplate state={state} dispatch={dispatch} />
   ) : (
     <AnimationSettingTemplate onInit={initAnimation} />
   );

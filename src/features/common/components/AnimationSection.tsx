@@ -6,11 +6,12 @@ import { SelectionAnimation } from "features/selectionSort/components/SelectionA
 import { css } from "stitches.config";
 import { useAlgorithm } from "../contexts/algorithm";
 import { SortingAlgorithm } from "../lib/types";
+import { MergeAnimation } from "features/mergeSort/components/MergeAnimation";
 
 const animationComponentMap: Record<SortingAlgorithm, React.ElementType> = {
   bubble: BubbleAnimation,
   insertion: InsertionAnimation,
-  merge: () => <div>Merge</div>,
+  merge: MergeAnimation,
   quick: QuickAnimation,
   selection: SelectionAnimation,
 };

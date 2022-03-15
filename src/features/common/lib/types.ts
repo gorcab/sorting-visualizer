@@ -18,6 +18,10 @@ export type Focusable = {
   isFocused: boolean;
 };
 
+export type YAxisMovable = {
+  yPos: number;
+};
+
 export type SortingAlgorithm =
   | "bubble"
   | "selection"

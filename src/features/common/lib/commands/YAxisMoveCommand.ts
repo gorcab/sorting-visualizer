@@ -1,5 +1,5 @@
 import { BaseState } from "features/common/reducers/sortingAnimationReducer";
-import { BaseItem } from "../types";
+import { BaseItem, YAxisMovable } from "../types";
 import { Command } from "./CommandInterface";
 
 type IndexInfo = {
@@ -8,8 +8,10 @@ type IndexInfo = {
   indexAfterMoving: number;
 };
 
-export class MoveCommand<Item extends BaseItem, State extends BaseState<Item>>
-  implements Command<Item, State>
+export class YAxisMoveCommand<
+  Item extends BaseItem & YAxisMovable,
+  State extends BaseState<Item>
+> implements Command<Item, State>
 {
   private indexInfo: IndexInfo;
 
@@ -24,8 +26,9 @@ export class MoveCommand<Item extends BaseItem, State extends BaseState<Item>>
 
     newList[initialIndex] = {
       ...newList[initialIndex],
-      currentIndex: indexAfterMoving,
+      yPos: indexAfterMoving,
     };
+
     newState.list = newList;
 
     return newState;
@@ -38,8 +41,9 @@ export class MoveCommand<Item extends BaseItem, State extends BaseState<Item>>
 
     newList[initialIndex] = {
       ...newList[initialIndex],
-      currentIndex: indexBeforeMoving,
+      yPos: indexBeforeMoving,
     };
+
     newState.list = newList;
 
     return newState;

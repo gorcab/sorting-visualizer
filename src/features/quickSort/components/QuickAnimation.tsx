@@ -25,7 +25,6 @@ export function QuickAnimation() {
     numToItemMappingFunc: numToQuickSortItemMappingFunc,
     sortingAlgorithm: quickSort,
   });
-  // console.log("state: ", state);
 
   const { pivotIndex, lowIndex, highIndex } = state;
 

@@ -1,7 +1,7 @@
 import { Command } from "features/common/lib/commands/CommandInterface";
 import { CompleteCommand } from "features/common/lib/commands/CompleteCommand";
 import { CompositeCommand } from "features/common/lib/commands/CompositeCommand";
-import { MoveCommand } from "features/common/lib/commands/MoveCommand";
+import { XAxisMoveCommand } from "features/common/lib/commands/XAxisMoveCommand";
 import { PickCommand } from "features/common/lib/commands/PickCommand";
 import { RevertCommand } from "features/common/lib/commands/RevertCommand";
 import { SelectCommand } from "features/common/lib/commands/SelectCommand";
@@ -37,7 +37,7 @@ export function insertionSort(
       }
 
       commands.push(
-        new MoveCommand<InsertionSortItem, InsertionSortState>({
+        new XAxisMoveCommand<InsertionSortItem, InsertionSortState>({
           initialIndex: _list[j].initialIndex,
           indexBeforeMoving: j,
           indexAfterMoving: j + 1,
@@ -54,7 +54,7 @@ export function insertionSort(
             itemToInsert.initialIndex
           )
         ),
-        new MoveCommand<InsertionSortItem, InsertionSortState>({
+        new XAxisMoveCommand<InsertionSortItem, InsertionSortState>({
           initialIndex: itemToInsert.initialIndex,
           indexBeforeMoving: i,
           indexAfterMoving: j + 1,

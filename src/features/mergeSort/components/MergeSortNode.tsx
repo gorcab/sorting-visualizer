@@ -5,7 +5,7 @@ import {
   TRANSLATE_DISTANCE,
 } from "features/common/lib/constants";
 import { motion, Variants } from "framer-motion";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { MergeSortItem } from "../types";
 
 type MergeSortNodeProps = MergeSortItem & {
@@ -56,15 +56,6 @@ export function MergeSortNode({
   currentIndex,
   initialIndex,
 }: MergeSortNodeProps) {
-  const nodeRef = useRef<HTMLLIElement>(null);
-
-  useLayoutEffect(() => {
-    if (!nodeRef.current) return;
-    if (isSelected) {
-      nodeRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
-    }
-  }, [isSelected]);
-
   const customValue: VariantsCustomProps = {
     indexDiff: currentIndex - initialIndex,
     translateDistance: TRANSLATE_DISTANCE,
@@ -114,9 +105,10 @@ export function MergeSortNode({
     isFocused,
   ]);
 
+  console.dir(animate);
+
   return (
     <AnimatedNode
-      ref={nodeRef}
       custom={customValue}
       animate={animate}
       variants={variants}

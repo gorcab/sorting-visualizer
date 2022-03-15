@@ -5,7 +5,7 @@ import {
   TRANSLATE_DISTANCE,
 } from "features/common/lib/constants";
 import { motion, Variants } from "framer-motion";
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { css } from "stitches.config";
 import { QuickSortItem } from "../types";
 
@@ -55,15 +55,6 @@ export function QuickSortNode({
   isSorted,
   isFocused,
 }: QuickSortNodeProps) {
-  const nodeRef = useRef<HTMLLIElement>(null);
-
-  useLayoutEffect(() => {
-    if (!nodeRef.current) return;
-    if (isSelected) {
-      nodeRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
-    }
-  }, [isSelected]);
-
   const animate = useMemo(() => {
     const animateArray = [];
     if (displayFocused) {
@@ -118,7 +109,6 @@ export function QuickSortNode({
       layout
       custom={customValue}
       animate={animate}
-      ref={nodeRef}
       variants={variants}
       css={{
         nodeHeight: value,

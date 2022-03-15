@@ -1,6 +1,6 @@
 import { ITEM_WIDTH, MARGIN_LEFT } from "features/common/lib/constants";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { css } from "stitches.config";
 
 type IndicatorProps = {
@@ -18,6 +18,7 @@ export function Indicator({
   lowIndex,
   highIndex,
 }: IndicatorProps) {
+  const indicatorRef = useRef<HTMLDivElement>(null);
   const overlapCount = useMemo(() => {
     let result = 0;
     if (pivotIndex === lowIndex || pivotIndex === highIndex) {
@@ -55,8 +56,16 @@ export function Indicator({
 
   return (
     <motion.div
+      ref={indicatorRef}
       initial={false}
       animate={{ x: index * (ITEM_WIDTH + MARGIN_LEFT) }}
+      onAnimationStart={() => {
+        if (!indicatorRef.current) return;
+        indicatorRef.current.scrollIntoView({
+          behavior: "smooth",
+          inline: "nearest",
+        });
+      }}
       className={indicatorClass({
         css: {
           position: "absolute",

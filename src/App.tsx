@@ -39,6 +39,7 @@ const mainClass = css({
   flex: 1,
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 });
 
 export default App;

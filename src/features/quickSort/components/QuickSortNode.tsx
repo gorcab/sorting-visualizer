@@ -118,13 +118,6 @@ export function QuickSortNode({
       }}
     >
       {value}
-      {isFocused && <span className={indexClass()}>[{currentIndex}]</span>}
     </AnimatedNode>
   );
 }
-
-const indexClass = css({
-  color: "$white",
-  position: "absolute",
-  bottom: "-30px",
-});

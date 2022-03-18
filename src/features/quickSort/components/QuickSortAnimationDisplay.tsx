@@ -18,7 +18,6 @@ export type QuickSortAnimationDisplayProps = DefaultDisplayProps & {
 const variants: Variants = {
   notFocused: {
     height: "100%",
-    alignItems: "baseline",
   },
   focused: {
     height: MAX_NODE_HEIGHT,

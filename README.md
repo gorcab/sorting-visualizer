@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Sorting Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project visualize sorting algorithms using React.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+The following sorting algorithms are implemented:
 
-### `yarn start`
+- Bubble Sort
+- Insertion Sort
+- Selection Sort
+- Merge Sort
+- Quick Sort
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You can add up to 8 items before you start sorting animation, or modify the order of items by drag and drop.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Libraries used in this project
 
-### `yarn test`
+- React (using create-react-app)
+- TypeScript
+- [Stitches](https://stitches.dev/)
+- [dnd-kit](https://dndkit.com/)
+- [framer-motion](https://www.framer.com/docs/)
+- [react-range](https://github.com/tajo/react-range)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Demo
 
-### `yarn build`
+You can start it here.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`yarn install` or `npm install` in the project's root directory.
 
-### `yarn eject`
+### 2. Run
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`yarn start` or `npm start` in the project's root directory.

@@ -25,7 +25,7 @@ You can add up to 8 items before you start sorting animation, or modify the orde
 
 ## Demo
 
-You can start it here.
+You can start it [here](https://sorting-visualizer-delta.vercel.app/).
 
 ## Usage
 

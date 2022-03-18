@@ -6,7 +6,6 @@ import {
 } from "features/common/lib/constants";
 import { motion, Variants } from "framer-motion";
 import { useMemo } from "react";
-import { css } from "stitches.config";
 import { QuickSortItem } from "../types";
 
 type QuickSortNodeProps = QuickSortItem & {
